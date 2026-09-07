@@ -6,16 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>えいごクイズ - セット3（わしょく＆イーブイ）</title>
   <style>
-    /* 全体的なテーマを「緑・和風」に変更しました */
-    :root { 
-      --primary: #4CAF50; 
-      --secondary: #81C784; 
-      --bg: #E8F5E9; 
-      --text: #1B5E20; 
-      --correct: #4CAF50; 
-      --incorrect: #FF9800; 
-      --btn-shadow: #388E3C; 
-    }
+    :root { --primary: #4CAF50; --secondary: #81C784; --bg: #E8F5E9; --text: #1B5E20; --correct: #4CAF50; --incorrect: #FF9800; --btn-shadow: #388E3C; }
     * { box-sizing: border-box; font-family: 'Hiragino Maru Gothic ProN', 'Rounded M+ 1c', sans-serif; }
     body { margin: 0; padding: 0; background-color: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; touch-action: manipulation; }
     h1, h2, h3, p { margin: 10px 0; }
@@ -52,15 +43,12 @@
     .mic-btn.listening { animation: pulse 1s infinite; background: #F44336; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     #play-voice-btn { background: #2196F3; box-shadow: 0 6px 0 #1976D2; border-radius: 50%; width: 80px; height: 80px; font-size: 2.5rem; border: none; color: white; cursor: pointer; margin-bottom: 15px;}
-    
-    /* おうちのひとOKボタンは目立つように青色に */
     #parent-ok-btn { background: #2196F3; color: white; border: none; padding: 12px 20px; border-radius: 15px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 0 #1976D2; cursor: pointer; margin-top: 15px; width: 100%; }
     #parent-ok-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #1976D2; }
-
-    #feedback-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 100; background: rgba(255,255,255,0.9); opacity: 0; pointer-events: none; transition: 0.3s; }
+    #feedback-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 100; background: rgba(255,255,255,0.95); opacity: 0; pointer-events: none; transition: 0.3s; }
     #feedback-overlay.show { opacity: 1; pointer-events: auto; }
     .feedback-icon { font-size: 10rem; animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    .feedback-text { font-size: 2.5rem; font-weight: bold; margin-top: 10px; }
+    .feedback-text { font-size: 2.5rem; font-weight: bold; margin-top: 10px; line-height: 1.4; }
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     #evolve-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255, 255, 255, 0.95); z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 1s; }
     #evolve-overlay.show { opacity: 1; pointer-events: auto; }
@@ -84,7 +72,6 @@
       <div class="exp-bar-bg"><div id="exp-bar" class="exp-bar-fill"></div></div>
     </div>
     <div class="food-section">
-      <!-- テキストを「わしょく」に変更 -->
       <p style="font-size: 1.2rem; font-weight: bold;">わしょく（かぎ🔑: <span id="key-count">0</span>）</p>
       <p style="font-size: 0.9rem; color: #777;">４もんせいかいで、ごはんが１つひらくよ！</p>
       <div id="food-list" class="food-list"></div>
@@ -109,7 +96,7 @@
 </div>
 
 <script>
-// 英検5級対応 セット3 (約180語: スポーツ、楽器、家、疑問詞、代名詞、動詞・形容詞3)
+// 英検5級対応 セット3 (約180語)
 const wordData = [
   // 1. スポーツ・しゅみ
   { en: "Baseball", ja: "やきゅう", emoji: "⚾" }, { en: "Soccer", ja: "サッカー", emoji: "⚽" }, { en: "Tennis", ja: "テニス", emoji: "🎾" }, { en: "Basketball", ja: "バスケットボール", emoji: "🏀" },
@@ -143,7 +130,7 @@ const wordData = [
   { en: "Glad", ja: "うれしい", emoji: "😊" }, { en: "Fine", ja: "げんき", emoji: "☀️" }, { en: "Sick", ja: "びょうき", emoji: "🤒" }
 ];
 
-// 和食に完全統一した 20種類データ（中華を和食に差し替えました）
+// 和食 20種類データ
 const allFoods = [
   { name: "おすし", emoji: "🍣" }, { name: "おにぎり", emoji: "🍙" }, { name: "おべんとう", emoji: "🍱" }, { name: "おそば", emoji: "🍜" }, { name: "うどん", emoji: "🍲" },
   { name: "てんぷら", emoji: "🍤" }, { name: "カレーライス", emoji: "🍛" }, { name: "おでん", emoji: "🍢" }, { name: "おせんべい", emoji: "🍘" }, { name: "やきとり", emoji: "🍢" },
@@ -240,13 +227,13 @@ function showNextQuestion() {
     document.getElementById('play-voice-btn').onclick = () => speakCuteVoice(qData.en); createPictureOptions(qData, contentEl.querySelector('#options-container')); setTimeout(() => speakCuteVoice(qData.en), 500);
   } else if (qType === 2) {
     contentEl.innerHTML = `<p style="font-size:1.5rem; font-weight:bold;">マイクでおして、えいごでいってみよう！</p><div class="question-emoji">${qData.emoji}</div><div class="question-word">${qData.en}</div><p style="font-size:1.2rem; color:#666;">（${qData.ja}）</p><button class="mic-btn" id="mic-btn">🎤</button><button id="play-voice-btn" style="margin-top:10px; width:60px; height:60px; font-size:1.5rem;">🔊</button><div style="margin-top:20px; padding-top:15px; border-top:2px dashed #ccc;"><p style="font-size:1rem; color:#888; margin-bottom:5px;">うまくはんのうしないときは…</p><button id="parent-ok-btn">おうちのひとがOKをだす ⭕</button></div>`;
-    document.getElementById('play-voice-btn').onclick = () => speakCuteVoice(qData.en); document.getElementById('parent-ok-btn').onclick = () => checkAnswer(true);
+    document.getElementById('play-voice-btn').onclick = () => speakCuteVoice(qData.en); document.getElementById('parent-ok-btn').onclick = () => checkAnswer(true, qData);
     const micBtn = document.getElementById('mic-btn');
     micBtn.onclick = () => {
       if (micBtn.classList.contains('listening')) return;
       try {
         const recognition = new SpeechRecognition(); recognition.lang = 'en-US'; recognition.interimResults = false; recognition.maxAlternatives = 1; micBtn.classList.add('listening');
-        recognition.onresult = (e) => { micBtn.classList.remove('listening'); const spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z0-9]/g, ''), target = qData.en.toLowerCase().replace(/[^a-z0-9]/g, ''); if (spoken.includes(target) || target.includes(spoken) || spoken.length > 0) checkAnswer(true); else checkAnswer(false); };
+        recognition.onresult = (e) => { micBtn.classList.remove('listening'); const spoken = e.results[0][0].transcript.toLowerCase().replace(/[^a-z0-9]/g, ''), target = qData.en.toLowerCase().replace(/[^a-z0-9]/g, ''); if (spoken.includes(target) || target.includes(spoken) || spoken.length > 0) checkAnswer(true, qData); else checkAnswer(false, qData); };
         recognition.onerror = () => { micBtn.classList.remove('listening'); }; recognition.onspeechend = () => { recognition.stop(); }; recognition.onnomatch = () => { micBtn.classList.remove('listening'); }; recognition.start();
       } catch(e) { micBtn.classList.remove('listening'); }
     };
@@ -262,12 +249,12 @@ function showNextQuestion() {
 
 function createPictureOptions(correctData, container) {
   const options = [correctData, ...[...wordData].filter(w => w.en !== correctData.en).sort(() => 0.5 - Math.random()).slice(0, 2)].sort(() => 0.5 - Math.random());
-  options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'option-btn'; btn.innerHTML = `<span style="font-size:3rem;">${opt.emoji}</span> <span style="font-size:1.5rem;">${opt.ja}</span>`; btn.onclick = () => checkAnswer(opt.en === correctData.en); container.appendChild(btn); });
+  options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'option-btn'; btn.innerHTML = `<span style="font-size:3rem;">${opt.emoji}</span> <span style="font-size:1.5rem;">${opt.ja}</span>`; btn.onclick = () => checkAnswer(opt.en === correctData.en, correctData); container.appendChild(btn); });
 }
 
 function createTextOptions(correctData, container) {
   const options = [correctData, ...[...wordData].filter(w => w.en !== correctData.en).sort(() => 0.5 - Math.random()).slice(0, 2)].sort(() => 0.5 - Math.random());
-  options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'option-btn'; btn.innerHTML = `<span style="font-size:2rem; font-weight:bold;">${opt.en}</span>`; btn.onclick = () => { speakCuteVoice(opt.en); setTimeout(() => checkAnswer(opt.en === correctData.en), 500); }; container.appendChild(btn); });
+  options.forEach(opt => { const btn = document.createElement('div'); btn.className = 'option-btn'; btn.innerHTML = `<span style="font-size:2rem; font-weight:bold;">${opt.en}</span>`; btn.onclick = () => { speakCuteVoice(opt.en); setTimeout(() => checkAnswer(opt.en === correctData.en, correctData), 500); }; container.appendChild(btn); });
 }
 
 function speakCuteVoice(text) {
@@ -277,15 +264,22 @@ function speakCuteVoice(text) {
   if (cuteVoice) msg.voice = cuteVoice; msg.pitch = 1.0; msg.rate = 0.9; window.speechSynthesis.speak(msg);
 }
 
-function checkAnswer(isCorrect) {
+function checkAnswer(isCorrect, correctData) {
   const overlay = document.getElementById('feedback-overlay'), icon = document.getElementById('feedback-icon'), text = document.getElementById('feedback-text');
-  if (isCorrect) { icon.innerText = "⭕"; text.innerText = "せいかい！すごい！"; text.style.color = "var(--correct)"; totalCorrect++; saveGameState(); } 
-  else { icon.innerText = "❌"; text.innerText = "おしい！もういちど！"; text.style.color = "var(--incorrect)"; }
+  if (isCorrect) { 
+    icon.innerText = "⭕"; 
+    text.innerHTML = `せいかい！すごい！<br><span style="font-size:3.5rem; color:#E91E63; display:block; margin-top:15px;">${correctData.en}</span><span style="font-size:1.5rem; color:#333;">${correctData.ja}</span>`;
+    text.style.color = "var(--correct)"; totalCorrect++; saveGameState(); 
+  } else { 
+    icon.innerText = "❌"; 
+    text.innerHTML = `おしい！もういちど！<br><span style="font-size:1.2rem; color:#666; display:block; margin-top:15px;">せいかいは：</span><span style="font-size:3rem; color:#E91E63; display:block;">${correctData.en}</span><span style="font-size:1.2rem; color:#333;">${correctData.ja}</span>`;
+    text.style.color = "var(--incorrect)"; 
+  }
   overlay.classList.add('show'); speakCuteVoice(isCorrect ? "Good job!" : "Oh no");
-  setTimeout(() => { overlay.classList.remove('show'); if (isCorrect) { currentQIndex++; showNextQuestion(); } }, 2000);
+  setTimeout(() => { overlay.classList.remove('show'); if (isCorrect) { currentQIndex++; showNextQuestion(); } }, 2500);
 }
 
 window.onload = initRoom;
 </script>
 </body>
-</html>s
+</html>
