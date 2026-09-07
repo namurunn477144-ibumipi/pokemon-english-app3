@@ -4,13 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="robots" content="noindex, nofollow">
-  <title>えいごクイズ - セット3（和食＆イーブイ）</title>
+  <title>えいごクイズ - セット3（わしょく＆イーブイ）</title>
   <style>
-    :root { --primary: #FF7043; --secondary: #FFAB91; --bg: #FBE9E7; --text: #4E342E; --correct: #4CAF50; --incorrect: #FF9800; --btn-shadow: #D84315; }
+    /* 全体的なテーマを「緑・和風」に変更しました */
+    :root { 
+      --primary: #4CAF50; 
+      --secondary: #81C784; 
+      --bg: #E8F5E9; 
+      --text: #1B5E20; 
+      --correct: #4CAF50; 
+      --incorrect: #FF9800; 
+      --btn-shadow: #388E3C; 
+    }
     * { box-sizing: border-box; font-family: 'Hiragino Maru Gothic ProN', 'Rounded M+ 1c', sans-serif; }
     body { margin: 0; padding: 0; background-color: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; touch-action: manipulation; }
     h1, h2, h3, p { margin: 10px 0; }
-    h1 { font-size: 1.5rem; color: #BF360C; }
+    h1 { font-size: 1.5rem; color: #2E7D32; }
     .view { display: none; padding: 20px 10px; min-height: 100vh; flex-direction: column; align-items: center; }
     .view.active { display: flex; }
     .big-btn { background-color: var(--primary); color: white; border: none; border-radius: 20px; padding: 15px 30px; font-size: 1.5rem; font-weight: bold; box-shadow: 0 6px 0 var(--btn-shadow); cursor: pointer; margin: 10px; transition: 0.1s; }
@@ -21,16 +30,16 @@
     #partner-name { font-size: 1.8rem; font-weight: bold; }
     .exp-container { width: 90%; max-width: 400px; margin: 10px 0; }
     .exp-label { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; }
-    .exp-bar-bg { background-color: #E0E0E0; border-radius: 15px; height: 30px; overflow: hidden; position: relative; border: 3px solid #FFF;}
-    .exp-bar-fill { background: linear-gradient(90deg, #FF7043, #FFAB91); height: 100%; width: 0%; transition: width 0.5s ease-out; }
+    .exp-bar-bg { background-color: #C8E6C9; border-radius: 15px; height: 30px; overflow: hidden; position: relative; border: 3px solid #FFF;}
+    .exp-bar-fill { background: linear-gradient(90deg, #4CAF50, #81C784); height: 100%; width: 0%; transition: width 0.5s ease-out; }
     .food-section { width: 90%; max-width: 400px; background: white; border-radius: 20px; padding: 15px; margin: 15px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .food-list { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
-    .food-item { font-size: 2.5rem; background: var(--bg); border-radius: 15px; padding: 10px; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative; box-shadow: 0 4px 0 #E0E0E0; }
-    .food-item:active { transform: translateY(4px); box-shadow: 0 0 0 #E0E0E0; }
+    .food-item { font-size: 2.5rem; background: var(--bg); border-radius: 15px; padding: 10px; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; cursor: pointer; position: relative; box-shadow: 0 4px 0 #C8E6C9; }
+    .food-item:active { transform: translateY(4px); box-shadow: 0 0 0 #C8E6C9; }
     .food-item.locked { filter: grayscale(100%) opacity(0.3); pointer-events: none; }
     .food-item.eaten { filter: grayscale(100%) opacity(0.4); pointer-events: none; }
-    .eaten-mark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; color: #4CAF50; text-shadow: 2px 2px 0 #FFF, -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF; }
-    .eating-msg { position: absolute; font-size: 1.5rem; color: #BF360C; font-weight: bold; top: 10px; opacity: 0; pointer-events: none; }
+    .eaten-mark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; color: #E91E63; text-shadow: 2px 2px 0 #FFF, -2px -2px 0 #FFF, 2px -2px 0 #FFF, -2px 2px 0 #FFF; }
+    .eating-msg { position: absolute; font-size: 1.5rem; color: #2E7D32; font-weight: bold; top: 10px; opacity: 0; pointer-events: none; }
     .quiz-header { margin-bottom: 20px; }
     #quiz-progress-text { font-size: 1.6rem; font-weight: bold; }
     #quiz-content { width: 100%; max-width: 400px; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -43,8 +52,11 @@
     .mic-btn.listening { animation: pulse 1s infinite; background: #F44336; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     #play-voice-btn { background: #2196F3; box-shadow: 0 6px 0 #1976D2; border-radius: 50%; width: 80px; height: 80px; font-size: 2.5rem; border: none; color: white; cursor: pointer; margin-bottom: 15px;}
-    #parent-ok-btn { background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 15px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 0 #388E3C; cursor: pointer; margin-top: 15px; width: 100%; }
-    #parent-ok-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #388E3C; }
+    
+    /* おうちのひとOKボタンは目立つように青色に */
+    #parent-ok-btn { background: #2196F3; color: white; border: none; padding: 12px 20px; border-radius: 15px; font-size: 1.2rem; font-weight: bold; box-shadow: 0 4px 0 #1976D2; cursor: pointer; margin-top: 15px; width: 100%; }
+    #parent-ok-btn:active { transform: translateY(4px); box-shadow: 0 0 0 #1976D2; }
+
     #feedback-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 100; background: rgba(255,255,255,0.9); opacity: 0; pointer-events: none; transition: 0.3s; }
     #feedback-overlay.show { opacity: 1; pointer-events: auto; }
     .feedback-icon { font-size: 10rem; animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -72,7 +84,8 @@
       <div class="exp-bar-bg"><div id="exp-bar" class="exp-bar-fill"></div></div>
     </div>
     <div class="food-section">
-      <p style="font-size: 1.2rem; font-weight: bold;">和食・ちゅうか（かぎ🔑: <span id="key-count">0</span>）</p>
+      <!-- テキストを「わしょく」に変更 -->
+      <p style="font-size: 1.2rem; font-weight: bold;">わしょく（かぎ🔑: <span id="key-count">0</span>）</p>
       <p style="font-size: 0.9rem; color: #777;">４もんせいかいで、ごはんが１つひらくよ！</p>
       <div id="food-list" class="food-list"></div>
     </div>
@@ -91,7 +104,7 @@
 <div id="evolve-overlay">
   <div class="evolve-sparkle">✨</div>
   <img id="evolve-image" src="" alt="しんか！">
-  <h2 id="evolve-text" style="font-size: 2.5rem; color: #BF360C;">おめでとう！<br>しんかした！</h2>
+  <h2 id="evolve-text" style="font-size: 2.5rem; color: #2E7D32;">おめでとう！<br>しんかした！</h2>
   <button class="big-btn" onclick="document.getElementById('evolve-overlay').classList.remove('show')">もどる</button>
 </div>
 
@@ -130,12 +143,12 @@ const wordData = [
   { en: "Glad", ja: "うれしい", emoji: "😊" }, { en: "Fine", ja: "げんき", emoji: "☀️" }, { en: "Sick", ja: "びょうき", emoji: "🤒" }
 ];
 
-// 和食・中華 20種類データ
+// 和食に完全統一した 20種類データ（中華を和食に差し替えました）
 const allFoods = [
-  { name: "おすし", emoji: "🍣" }, { name: "おにぎり", emoji: "🍙" }, { name: "おべんとう", emoji: "🍱" }, { name: "ラーメン", emoji: "🍜" }, { name: "うどん", emoji: "🍲" },
-  { name: "エビフライ", emoji: "🍤" }, { name: "カレーライス", emoji: "🍛" }, { name: "おでん", emoji: "🍢" }, { name: "ぎょうざ", emoji: "🥟" }, { name: "やきとり", emoji: "🍢" },
+  { name: "おすし", emoji: "🍣" }, { name: "おにぎり", emoji: "🍙" }, { name: "おべんとう", emoji: "🍱" }, { name: "おそば", emoji: "🍜" }, { name: "うどん", emoji: "🍲" },
+  { name: "てんぷら", emoji: "🍤" }, { name: "カレーライス", emoji: "🍛" }, { name: "おでん", emoji: "🍢" }, { name: "おせんべい", emoji: "🍘" }, { name: "やきとり", emoji: "🍢" },
   { name: "やきざかな", emoji: "🐟" }, { name: "たこやき", emoji: "🐙" }, { name: "やきいも", emoji: "🍠" }, { name: "おもち", emoji: "🍘" }, { name: "みそしる", emoji: "🥣" },
-  { name: "なっとう", emoji: "🧆" }, { name: "てんぷら", emoji: "🍤" }, { name: "おちゃ", emoji: "🍵" }, { name: "ごはん", emoji: "🍚" }, { name: "にくまん", emoji: "🥟" }
+  { name: "なっとう", emoji: "🧆" }, { name: "のりまき", emoji: "🍣" }, { name: "おちゃ", emoji: "🍵" }, { name: "ごはん", emoji: "🍚" }, { name: "からあげ", emoji: "🍗" }
 ];
 
 const evolutionsList = [
@@ -150,7 +163,6 @@ window.speechSynthesis.onvoiceschanged = () => { synthVoices = window.speechSynt
 
 const roomView = document.getElementById('room-view'), quizView = document.getElementById('quiz-view'), foodListEl = document.getElementById('food-list'), keyCountEl = document.getElementById('key-count'), expText = document.getElementById('exp-text'), expBar = document.getElementById('exp-bar'), partnerImg = document.getElementById('partner-image'), partnerName = document.getElementById('partner-name'), evolveImg = document.getElementById('evolve-image'), mainTitle = document.getElementById('main-title'), resetBtn = document.getElementById('reset-evo-btn');
 
-// ★ セーブデータの名前を「3」に変更！ ★
 function saveGameState() { localStorage.setItem('eigoQuizSaveData3', JSON.stringify({ totalCorrect, currentExp, isEvolved, currentPartner, activeFoods })); }
 function loadGameState() {
   const saved = localStorage.getItem('eigoQuizSaveData3');
@@ -276,4 +288,4 @@ function checkAnswer(isCorrect) {
 window.onload = initRoom;
 </script>
 </body>
-</html>
+</html>s
